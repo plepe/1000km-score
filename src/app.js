@@ -37,6 +37,21 @@ window.onload = () => {
     data.rounds.push(round)
     prevSums = showRound(round, prevSums)
   }
+
+  const newGame = document.createElement('button')
+  document.body.appendChild(newGame)
+  newGame.appendChild(document.createTextNode('Neues Spiel'))
+
+  newGame.onclick = () => {
+    data.rounds = [[{}, {}]]
+
+    while (table.lastChild) {
+      table.removeChild(table.lastChild)
+    }
+
+    showBoard(data)
+    saveData()
+  }
 }
 
 function showBoard (data) {
