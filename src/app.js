@@ -15,7 +15,7 @@ window.onload = () => {
   table = document.createElement('table')
   document.body.appendChild(table)
 
-  showBoard({
+  prevSums = showBoard({
     players: ['Skunk', 'Sub'],
     rounds: [[
       {
@@ -41,6 +41,14 @@ window.onload = () => {
       }
     ]]
   })
+
+  const button = document.createElement('button')
+  document.body.appendChild(button)
+  button.appendChild(document.createTextNode('Neue Runde'))
+
+  button.onclick = () => {
+    prevSums = showRound([{}, {}], prevSums)
+  }
 }
 
 function showBoard (data) {
@@ -65,6 +73,8 @@ function showBoard (data) {
   data.rounds.forEach((round) => {
     prevSums = showRound(round, prevSums)
   })
+
+  return prevSums
 }
 
 function calcRoundSums (round, data) {
