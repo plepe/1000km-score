@@ -28,6 +28,17 @@ window.onload = () => {
         truempfe: 100,
         stiche: 0
       }
+    ], [
+      {
+        entfernung: 250,
+        truempfe: 200,
+        stiche: 100
+      },
+      {
+        entfernung: 700,
+        truempfe: 100,
+        stiche: 0
+      }
     ]]
   })
 }
@@ -50,8 +61,9 @@ function showBoard (data) {
     th.appendChild(input)
   })
 
+  let prevSums = [0, 0]
   data.rounds.forEach((round) => {
-    showRound(round)
+    prevSums = showRound(round, prevSums)
   })
 }
 
@@ -67,8 +79,9 @@ function calcRoundSums (round, data) {
   })
 }
 
-function showRound (round) {
+function showRound (round, prevSums) {
   let roundSumRow
+  let totalSumRow
 
   Object.entries(roundDef).forEach(([rowKey, rowDef]) => {
     const tr = document.createElement('tr')
@@ -89,7 +102,7 @@ function showRound (round) {
 
       input.onkeyup = () => {
         round[i][rowKey] = parseInt(input.value)
-        updateRoundSums(round, roundSumRow)
+        updateRoundSums(round, prevSums, roundSumRow, totalSumRow, totalSums)
       }
 
       td.appendChild(input)
@@ -99,7 +112,7 @@ function showRound (round) {
   roundSumRow = document.createElement('tr')
   table.appendChild(roundSumRow)
 
-  const th = document.createElement('th')
+  let th = document.createElement('th')
   roundSumRow.appendChild(th)
   th.appendChild(document.createTextNode('Summe Runde'))
 
@@ -115,14 +128,42 @@ function showRound (round) {
 
     td.appendChild(input)
   })
+
+  totalSumRow = document.createElement('tr')
+  table.appendChild(totalSumRow)
+
+  th = document.createElement('th')
+  totalSumRow.appendChild(th)
+  th.appendChild(document.createTextNode('Total'))
+
+  round.forEach((player, i) => {
+    const td = document.createElement('td')
+    totalSumRow.appendChild(td)
+
+    const input = document.createElement('input')
+    td.appendChild(input)
+  })
+
+  const totalSums = [0, 0]
+  updateRoundSums(round, prevSums, roundSumRow, totalSumRow, totalSums)
+  return totalSums
 }
 
-function updateRoundSums (round, roundSumRow) {
+function updateRoundSums (round, prevSums, roundSumRow, totalSumRow, totalSums) {
   const sums = calcRoundSums(round)
+  prevSums.forEach((p, i) => {
+    totalSums[i] = p + sums[i]
+  })
+
   round.forEach((player, i) => {
     const td = roundSumRow.cells[0, i + 1]
     const input = td.querySelector('input')
-
     input.value = sums[i]
+  })
+
+  round.forEach((player, i) => {
+    const td = totalSumRow.cells[0, i + 1]
+    const input = td.querySelector('input')
+    input.value = totalSums[i]
   })
 }
