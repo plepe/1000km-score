@@ -93,11 +93,17 @@ function showRound (round, prevSums) {
       tr.appendChild(td)
 
       const input = document.createElement('input')
+      input.type = 'number'
       if (round[i][rowKey]) {
         input.value = round[i][rowKey]
       }
 
       input.onkeyup = () => {
+        round[i][rowKey] = parseInt(input.value)
+        updateRoundSums(round, prevSums, roundSumRow, totalSumRow, totalSums)
+      }
+
+      input.onchange = () => {
         round[i][rowKey] = parseInt(input.value)
         updateRoundSums(round, prevSums, roundSumRow, totalSumRow, totalSums)
       }
@@ -119,6 +125,7 @@ function showRound (round, prevSums) {
     roundSumRow.appendChild(td)
 
     const input = document.createElement('input')
+    input.disabled = true
     if (sums[i]) {
       input.value = sums[i]
     }
@@ -138,6 +145,7 @@ function showRound (round, prevSums) {
     totalSumRow.appendChild(td)
 
     const input = document.createElement('input')
+    input.disabled = true
     td.appendChild(input)
   })
 
