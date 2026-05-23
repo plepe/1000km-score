@@ -11,9 +11,15 @@ const roundDef = {
 }
 
 let table
-let data = {
-  players: ['', ''],
-  rounds: [[{}, {}]]
+let data
+try {
+  data = JSON.parse(global.localStorage.getItem('1000km'))
+} catch (e) {}
+if (!data) {
+  data = {
+    players: ['', ''],
+    rounds: [[{}, {}]]
+  }
 }
 
 window.onload = () => {
@@ -176,5 +182,5 @@ function updateRoundSums (round, prevSums, roundSumRow, totalSumRow, totalSums) 
 }
 
 function saveData () {
-  console.log(data)
+  global.localStorage.setItem('1000km', JSON.stringify(data))
 }
