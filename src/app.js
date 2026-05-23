@@ -4,6 +4,7 @@ const roundDef = {
   },
   truempfe: {
     title: 'Trümpfe',
+    help: '100 pro',
   },
   stiche: {
     title: 'Stiche',
@@ -108,6 +109,13 @@ function showRound (round, prevSums) {
     const th = document.createElement('th')
     tr.appendChild(th)
     th.appendChild(document.createTextNode(rowDef.title))
+
+    if (rowDef.help) {
+      const span = document.createElement('span')
+      span.className = 'help'
+      span.appendChild(document.createTextNode(rowDef.help))
+      th.appendChild(span)
+    }
 
     round.forEach((player, i) => {
       const td = document.createElement('td')
