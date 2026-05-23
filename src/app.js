@@ -1,6 +1,6 @@
 const roundDef = {
   entfernung: {
-    title: 'Entfernung',
+    title: 'Kilometer',
   },
   truempfe: {
     title: 'Trümpfe',
@@ -8,6 +8,27 @@ const roundDef = {
   },
   stiche: {
     title: 'Stiche',
+    help: '300 pro',
+  },
+  satzgewinn: {
+    title: 'Satzgewinn',
+    help: '400 pro',
+  },
+  kroenung: {
+    title: 'Krönung',
+    help: '300',
+  },
+  keine200: {
+    title: 'keine 200',
+    help: '300',
+  },
+  verlaengerung: {
+    title: 'Verlängerung',
+    help: '200',
+  },
+  schneider: {
+    title: 'Schneider',
+    help: '500',
   },
 }
 
