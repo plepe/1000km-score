@@ -60,7 +60,7 @@ function calcRoundSums (round, data) {
     let sum = 0
 
     Object.values(player).forEach(v => {
-      sum += v
+      sum += v ? parseInt(v) : 0
     })
 
     return sum
@@ -87,6 +87,11 @@ function showRound (round) {
         input.value = round[i][rowKey]
       }
 
+      input.onkeyup = () => {
+        round[i][rowKey] = parseInt(input.value)
+        updateRoundSums(round, roundSumRow)
+      }
+
       td.appendChild(input)
     })
   })
@@ -109,5 +114,15 @@ function showRound (round) {
     }
 
     td.appendChild(input)
+  })
+}
+
+function updateRoundSums (round, roundSumRow) {
+  const sums = calcRoundSums(round)
+  round.forEach((player, i) => {
+    const td = roundSumRow.cells[0, i + 1]
+    const input = td.querySelector('input')
+
+    input.value = sums[i]
   })
 }
