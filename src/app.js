@@ -10,7 +10,11 @@ const roundDef = {
   },
 }
 
+let table
 window.onload = () => {
+  table = document.createElement('table')
+  document.body.appendChild(table)
+
   showBoard({
     players: ['Skunk', 'Sub'],
     rounds: [[
@@ -29,8 +33,6 @@ window.onload = () => {
 }
 
 function showBoard (data) {
-  const table = document.createElement('table')
-  document.body.appendChild(table)
   const tr = document.createElement('tr')
   table.appendChild(tr)
 
@@ -48,47 +50,8 @@ function showBoard (data) {
     th.appendChild(input)
   })
 
-  data.rounds.forEach((round, r) => {
-    Object.entries(roundDef).forEach(([rowKey, rowDef]) => {
-      const tr = document.createElement('tr')
-      table.appendChild(tr)
-
-      const th = document.createElement('th')
-      tr.appendChild(th)
-      th.appendChild(document.createTextNode(rowDef.title))
-
-      data.players.forEach((player, i) => {
-        const td = document.createElement('td')
-        tr.appendChild(td)
-
-        const input = document.createElement('input')
-        if (round[i][rowKey]) {
-          input.value = round[i][rowKey]
-        }
-
-        td.appendChild(input)
-      })
-    })
-
-    const roundSumRow = document.createElement('tr')
-    table.appendChild(roundSumRow)
-
-    const th = document.createElement('th')
-    roundSumRow.appendChild(th)
-    th.appendChild(document.createTextNode('Summe Runde'))
-
-    const sums = calcRoundSums(round, data)
-    data.players.forEach((player, i) => {
-      const td = document.createElement('td')
-      roundSumRow.appendChild(td)
-
-      const input = document.createElement('input')
-      if (sums[i]) {
-        input.value = sums[i]
-      }
-
-      td.appendChild(input)
-    })
+  data.rounds.forEach((round) => {
+    showRound(round)
   })
 }
 
@@ -101,5 +64,50 @@ function calcRoundSums (round, data) {
     })
 
     return sum
+  })
+}
+
+function showRound (round) {
+  let roundSumRow
+
+  Object.entries(roundDef).forEach(([rowKey, rowDef]) => {
+    const tr = document.createElement('tr')
+    table.appendChild(tr)
+
+    const th = document.createElement('th')
+    tr.appendChild(th)
+    th.appendChild(document.createTextNode(rowDef.title))
+
+    round.forEach((player, i) => {
+      const td = document.createElement('td')
+      tr.appendChild(td)
+
+      const input = document.createElement('input')
+      if (round[i][rowKey]) {
+        input.value = round[i][rowKey]
+      }
+
+      td.appendChild(input)
+    })
+  })
+
+  roundSumRow = document.createElement('tr')
+  table.appendChild(roundSumRow)
+
+  const th = document.createElement('th')
+  roundSumRow.appendChild(th)
+  th.appendChild(document.createTextNode('Summe Runde'))
+
+  const sums = calcRoundSums(round)
+  round.forEach((player, i) => {
+    const td = document.createElement('td')
+    roundSumRow.appendChild(td)
+
+    const input = document.createElement('input')
+    if (sums[i]) {
+      input.value = sums[i]
+    }
+
+    td.appendChild(input)
   })
 }
