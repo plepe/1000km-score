@@ -11,21 +11,25 @@ const roundDef = {
 }
 
 let table
+let data = {
+  players: ['', ''],
+  rounds: [[{}, {}]]
+}
+
 window.onload = () => {
   table = document.createElement('table')
   document.body.appendChild(table)
 
-  prevSums = showBoard({
-    players: ['', ''],
-    rounds: [[{}, {}]]
-  })
+  prevSums = showBoard(data)
 
   const button = document.createElement('button')
   document.body.appendChild(button)
   button.appendChild(document.createTextNode('Neue Runde'))
 
   button.onclick = () => {
-    prevSums = showRound([{}, {}], prevSums)
+    const round = [{}, {}]
+    data.rounds.push(round)
+    prevSums = showRound(round, prevSums)
   }
 }
 
@@ -38,13 +42,18 @@ function showBoard (data) {
 
   th.appendChild(document.createTextNode('Players'))
 
-  data.players.forEach(player => {
+  data.players.forEach((player, i) => {
     const th = document.createElement('th')
     tr.appendChild(th)
 
     const input = document.createElement('input')
     input.value = player
     th.appendChild(input)
+
+    input.onkeyup = () => {
+      data.players[i] = input.value
+      saveData()
+    }
   })
 
   let prevSums = [0, 0]
@@ -154,4 +163,10 @@ function updateRoundSums (round, prevSums, roundSumRow, totalSumRow, totalSums) 
     const input = td.querySelector('input')
     input.value = totalSums[i]
   })
+
+  saveData()
+}
+
+function saveData () {
+  console.log(data)
 }
