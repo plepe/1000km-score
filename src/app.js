@@ -86,7 +86,7 @@ function showBoard (data) {
   th.appendChild(document.createTextNode('Players'))
 
   data.players.forEach((player, i) => {
-    const th = document.createElement('th')
+    const th = document.createElement('td')
     tr.appendChild(th)
 
     const input = document.createElement('input')

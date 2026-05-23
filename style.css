@@ -1,3 +1,13 @@
+tr th {
+  width: 30%;
+}
+tr td {
+  width: 35%;
+}
+input {
+  display: block;
+  width: 100%;
+}
 th .help {
   display: block;
   font-weight: normal;
