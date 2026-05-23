@@ -16,30 +16,8 @@ window.onload = () => {
   document.body.appendChild(table)
 
   prevSums = showBoard({
-    players: ['Skunk', 'Sub'],
-    rounds: [[
-      {
-        entfernung: 250,
-        truempfe: 200,
-        stiche: 100
-      },
-      {
-        entfernung: 700,
-        truempfe: 100,
-        stiche: 0
-      }
-    ], [
-      {
-        entfernung: 250,
-        truempfe: 200,
-        stiche: 100
-      },
-      {
-        entfernung: 700,
-        truempfe: 100,
-        stiche: 0
-      }
-    ]]
+    players: ['', ''],
+    rounds: [[{}, {}]]
   })
 
   const button = document.createElement('button')
